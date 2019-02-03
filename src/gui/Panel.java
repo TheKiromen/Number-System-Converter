@@ -5,64 +5,93 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class Panel extends JPanel {
 	
+	JTextArea convertFrom,convertTo;
 	JComboBox baseFrom,baseTo;
-	JLabel baseFromLabel,baseToLabel,convertFromLabel,convertToLabel;
-	String[] options = {"Binary","Octal","Decimal","Hexadecimal","Custom"};
+	JTextField precision;
+	JLabel baseFromLabel,baseToLabel,precisionLabel;
+	JButton convert,help;
+	String[] systems = {"Binary","Octal","Decimal","Hexadecimal","Custom"};
 
 	Panel(){
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.insets=new Insets(10,20,0,10);
-		c.anchor=GridBagConstraints.FIRST_LINE_START;
-		c.fill=GridBagConstraints.NONE;
+		c.fill=GridBagConstraints.BOTH;
 		
-		
-		//FIRST COLUMN
-		//Convert from option
-		c.gridx=0;
-		c.gridy=0;
-		c.weighty=0.01;
+		//------------FIRST COLUMN------------
 		c.weightx=1;
-		baseFromLabel=new JLabel("Convert from:");
+		c.weighty=1;
+		c.gridx=0;
+		
+		//ConvertFrom Label
+		c.gridy=0;
+		JLabel baseFromLabel = new JLabel("Convert from:");
 		add(baseFromLabel,c);
 		
+		//ConvertFrom ComboBox
 		c.gridy=1;
-		c.weighty=0.01;
-		baseFrom=new JComboBox(options);
+		baseFrom = new JComboBox(systems);
 		baseFrom.setFocusable(false);
 		add(baseFrom,c);
 		
-		
-		//Convert to option
+		//ComvertTo Label
 		c.gridy=2;
-		c.weighty=0.01;
 		baseToLabel=new JLabel("Convert to:");
 		add(baseToLabel,c);
 		
+		//ConvertTo ComboBox
 		c.gridy=3;
-		c.weighty=2.0;
-		baseTo=new JComboBox(options);
+		baseTo = new JComboBox(systems);
 		baseTo.setFocusable(false);
 		add(baseTo,c);
 		
+		//Precision Label
+		c.gridy=4;
+		precisionLabel = new JLabel("Precision:");
+		add(precisionLabel,c);
 		
-		//SECOND COULMN
-				
-		//Convert from input
-		c.gridx=1;
-		c.gridy=0;
-		c.weighty=0.1;
+		//Precision TextField
+		c.gridy=5;
+		precision = new JTextField(10);
+		add(precision,c);
+		
+		
+		//-------------SECOND COLUMN-------------
 		c.weightx=1;
-		convertFromLabel=new JLabel("Convert from ");
-		add(convertFromLabel,c);
+		c.weighty=1;
+		c.gridx=1;
 		
+		//ConvertFrom TextArea
+		c.gridy=0;
+		c.gridheight=2;
+		convertFrom=new JTextArea(10,2);
+		add(convertFrom,c);
 		
+		//Convert Button
+		c.gridy=2;
+		c.gridheight=1;
+		convert = new JButton("Convert");
+		add(convert,c);
+		
+		//ConvertTo TextArea
+		c.gridy=3;
+		c.gridheight=2;
+		convertTo=new JTextArea(10,2);
+		convertTo.setEditable(false);
+		add(convertTo,c);
+		
+		c.gridy=5;
+		c.gridheight=1;
+		help=new JButton("Help");
+		add(help,c);
 	}
 }
