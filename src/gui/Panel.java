@@ -3,18 +3,19 @@ package gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class Panel extends JPanel {
 	
+	JScrollPane convertFromScroll,convertToScroll;
 	JTextArea convertFrom,convertTo;
 	JComboBox baseFrom,baseTo;
 	JTextField precision;
@@ -69,12 +70,15 @@ public class Panel extends JPanel {
 		c.weightx=1;
 		c.weighty=1;
 		c.gridx=1;
-		
 		//ConvertFrom TextArea
 		c.gridy=0;
 		c.gridheight=2;
 		convertFrom=new JTextArea(10,2);
-		add(convertFrom,c);
+		convertFrom.setLineWrap(true);
+		convertFrom.setWrapStyleWord(true);
+		convertFromScroll = new JScrollPane(convertFrom);
+		convertFromScroll.setHorizontalScrollBar(null);
+		add(convertFromScroll,c);
 		
 		//Convert Button
 		c.gridy=2;
@@ -87,8 +91,11 @@ public class Panel extends JPanel {
 		c.gridheight=2;
 		convertTo=new JTextArea(10,2);
 		convertTo.setEditable(false);
-		add(convertTo,c);
+		convertToScroll = new JScrollPane(convertTo);
+		convertToScroll.setHorizontalScrollBar(null);
+		add(convertToScroll,c);
 		
+		//Help button
 		c.gridy=5;
 		c.gridheight=1;
 		help=new JButton("Help");
