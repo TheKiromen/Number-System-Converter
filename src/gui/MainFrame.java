@@ -1,10 +1,6 @@
 package gui;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
