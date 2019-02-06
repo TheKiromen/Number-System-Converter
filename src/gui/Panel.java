@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -118,14 +119,18 @@ public class Panel extends JPanel {
 	}
 	
 
+	
+	//------------------------------------EVENT HANDLING--------------------------------------
 	private class DataGetter implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String number = convertFrom.getText();
 			int base1=10,base2=10,prec=0;
-
 			
+			//-------------------GETTING THE DATA--------------------//
+			
+			//---Base we are converting from
 			switch(baseFrom.getSelectedIndex()) {
 			case 0:
 				base1=2;
@@ -144,8 +149,7 @@ public class Panel extends JPanel {
 			break;
 			}
 			
-			
-			
+			//---Base we are converting to
 			switch(baseTo.getSelectedIndex()) {
 			case 0:
 				base2=2;
@@ -164,14 +168,22 @@ public class Panel extends JPanel {
 			break;
 			}
 			
-			
-			
+			//---PRECISION
 			try {
 				prec=Integer.parseInt(precision.getText());
+			}catch(NumberFormatException ex) {
+				//MSG BOX PRECISION INPUT IS WRONG
+			}
+			
+			
+			
+			//------------------CONVERSION-----------------//
+			
+			try {
 				FormData data = new FormData(number,base1,base2,prec);
 				convertTo.setText(Converter.convert(data));
-			}catch(NumberFormatException ex) {
-				//MSG BOX FOR INVALID INPUT
+			}catch(NumberSystemException ex) {
+				//MSG BOX INPUT IS IN WRONG FORMAT
 			}
 			
 			
@@ -179,4 +191,8 @@ public class Panel extends JPanel {
 		}
 		
 	}
+	
+	
+	
+	
 }
