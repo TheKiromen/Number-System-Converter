@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -122,8 +123,11 @@ public class Panel extends JPanel {
 	//------------------------------------EVENT HANDLING--------------------------------------
 	private class DataGetter implements ActionListener{
 
+
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			String tmp;
 			String number = convertFrom.getText();
 			int base1=10,base2=10,prec=0;
 			
@@ -144,7 +148,16 @@ public class Panel extends JPanel {
 				base1=16;
 			break;
 			case 4:
-				//DO MSG BOX TO INPUT CUSOM BASE
+				try {
+					tmp=JOptionPane.showInputDialog("Input base to convert to.");
+					if(tmp!=null&&!tmp.equals("")) {
+						base1=Integer.parseInt(tmp);
+						if(base1<2||base1>36) {throw new NumberFormatException("Invalid input.");}
+					}
+				}catch(NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Invalid input. Number base should be between 2 and 32", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 			break;
 			}
 			
@@ -163,15 +176,30 @@ public class Panel extends JPanel {
 				base2=16;
 			break;
 			case 4:
-				//DO MSG BOX TO INPUT CUSOM BASE
+				try {
+					tmp=JOptionPane.showInputDialog("Input base to convert to.");
+					if(tmp!=null&&!tmp.equals("")) {
+						base2=Integer.parseInt(tmp);
+						if(base2<2||base2>36) {throw new NumberFormatException("Invalid input.");}
+					}
+				}catch(NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Invalid input. Number base should be between 2 and 32", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 			break;
 			}
 			
 			//---PRECISION
 			try {
-				prec=Integer.parseInt(precision.getText());
+				tmp=precision.getText();
+				if(tmp.equals("")) {
+					precision.setText("0");
+					tmp="0";
+				}
+				prec=Integer.parseInt(tmp);
 			}catch(NumberFormatException ex) {
-				//MSG BOX PRECISION INPUT IS WRONG
+				JOptionPane.showMessageDialog(null, "Invalid input. Precision should be an integer.", "Invalid Input.", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
 			
 			
@@ -182,8 +210,7 @@ public class Panel extends JPanel {
 				FormData data = new FormData(number,base1,base2,prec);
 				convertTo.setText(Converter.convert(data));
 			}catch(NumberSystemException ex) {
-				//MSG BOX INPUT IS IN WRONG FORMAT
-				System.out.println("Invalid input");
+				JOptionPane.showMessageDialog(null, ex.getMessage(),"Invalid Input.", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}

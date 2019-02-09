@@ -10,8 +10,8 @@ public class MainFrame extends JFrame{
 		super(title);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600,300);
+		setResizable(false);
 		setLocationRelativeTo(null);
-		
 		
 		
 		//Layout
