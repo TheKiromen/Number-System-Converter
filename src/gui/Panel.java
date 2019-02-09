@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -184,15 +183,9 @@ public class Panel extends JPanel {
 				convertTo.setText(Converter.convert(data));
 			}catch(NumberSystemException ex) {
 				//MSG BOX INPUT IS IN WRONG FORMAT
+				System.out.println("Invalid input");
 			}
 			
-			
-			
 		}
-		
 	}
-	
-	
-	
-	
 }

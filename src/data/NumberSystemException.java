@@ -5,6 +5,6 @@ public class NumberSystemException extends Exception{
 	
 	@Override
 	public String getMessage() {
-		return "Input is incorrect.";
+		return "Invalid Input";
 	}
 }
