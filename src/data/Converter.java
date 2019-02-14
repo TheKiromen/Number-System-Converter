@@ -14,10 +14,10 @@ public class Converter{
 			//---Conversion
 			if(data.getBaseFrom()==data.getBaseTo()) {
 				result=data.getNumber();
-			}else if(data.getBaseFrom()==10) {
+			}else if(data.getBaseTo()==10) {
 				result=toDecimal(data.getNumber());
 			}else {
-				//CONVERSION
+				result=fromDecimal(toDecimal(data.getNumber()));
 			}
 		}
 		
@@ -34,8 +34,7 @@ public class Converter{
 			for(int i=0;i<tmp.length();i++) {
 				c=tmp.charAt(i);
 				if(!((c>='0'&&c<='9')||
-					(c>='A'&&c<=(char)(54+data.getBaseFrom()))
-					||c=='.')) {
+					(c>='A'&&c<=(char)(54+data.getBaseFrom())))) {
 					return false;
 				}
 			}
@@ -44,8 +43,7 @@ public class Converter{
 			for(int i=0;i<tmp.length();i++) {
 				c=tmp.charAt(i);
 				if(c<'0'||
-					c>Integer.toString(data.getBaseFrom()-1).charAt(0)
-					||c=='.') {
+					c>Integer.toString(data.getBaseFrom()-1).charAt(0)) {
 					return false;
 				}
 			}
@@ -55,7 +53,17 @@ public class Converter{
 	
 	
 	private static String toDecimal(String number) {
+		String significand,floating_point;
 		String result="";
+
+		return result;
+	}
+	
+	
+	private static String fromDecimal(String number) {
+		String significand,floating_point;
+		String result="";
+		
 		return result;
 	}
 	

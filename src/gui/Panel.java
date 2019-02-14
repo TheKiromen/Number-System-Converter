@@ -5,7 +5,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import data.*;
 
@@ -25,8 +26,7 @@ public class Panel extends JPanel {
 	JScrollPane convertFromScroll,convertToScroll;
 	JTextArea convertFrom,convertTo;
 	JComboBox<String> baseFrom,baseTo;
-	JTextField precision;
-	JLabel baseFromLabel,baseToLabel,precisionLabel;
+	JLabel baseFromLabel,baseToLabel;
 	JButton convert,help;
 	String[] systems = {"Binary","Octal","Decimal","Hexadecimal","Custom"};
 	DataGetter events = new DataGetter();
@@ -41,11 +41,12 @@ public class Panel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill=GridBagConstraints.HORIZONTAL;
 		c.insets=new Insets(10, 10, 10, 10);
-		
+		c.anchor=GridBagConstraints.PAGE_START;
 		
 		//------------FIRST COLUMN------------
 		c.weightx=0.7;
 		c.gridx=0;
+		
 		
 		//ConvertFrom Label
 		c.gridy=0;
@@ -71,17 +72,11 @@ public class Panel extends JPanel {
 		baseTo.addActionListener(events);
 		add(baseTo,c);
 		
-		//Precision Label
+		//Help button
 		c.gridy=4;
-		precisionLabel = new JLabel("Precision:");
-		add(precisionLabel,c);
-		
-		//Precision TextField
-		c.gridy=5;
-		precision = new JTextField(10);
-		precision.setText("0");
-		add(precision,c);
-		
+		help=new JButton("Help");
+		add(help,c);
+
 		
 		//-------------SECOND COLUMN-------------
 		c.weightx=1.5;
@@ -95,6 +90,7 @@ public class Panel extends JPanel {
 		convertFrom=new JTextArea(10,2);
 		convertFrom.setLineWrap(true);
 		convertFrom.setWrapStyleWord(true);
+		convertFrom.addKeyListener(new InputFormatter());
 		convertFromScroll = new JScrollPane(convertFrom);
 		convertFromScroll.setHorizontalScrollBar(null);
 		add(convertFromScroll,c);
@@ -115,11 +111,7 @@ public class Panel extends JPanel {
 		convertToScroll.setHorizontalScrollBar(null);
 		add(convertToScroll,c);
 		
-		//Help button
-		c.gridy=5;
-		c.gridheight=1;
-		help=new JButton("Help");
-		add(help,c);
+
 	}
 	
 
@@ -220,17 +212,17 @@ public class Panel extends JPanel {
 			}
 			
 			//---PRECISION
-			try {
-				tmp=precision.getText();
-				if(tmp.equals("")) {
-					precision.setText("0");
-					tmp="0";
-				}
-				prec=Integer.parseInt(tmp);
-			}catch(NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "Invalid input. Precision should be an integer.", "Invalid Input.", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+//			try {
+//				tmp=precision.getText();
+//				if(tmp.equals("")) {
+//					precision.setText("0");
+//					tmp="0";
+//				}
+//				prec=Integer.parseInt(tmp);
+//			}catch(NumberFormatException ex) {
+//				JOptionPane.showMessageDialog(null, "Invalid input. Precision should be an integer.", "Invalid Input.", JOptionPane.ERROR_MESSAGE);
+//				return;
+//			}
 			
 			
 			
@@ -242,7 +234,26 @@ public class Panel extends JPanel {
 			}catch(NumberSystemException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(),"Invalid Input.", JOptionPane.ERROR_MESSAGE);
 			}
-			
 		}
 	}
+	
+	
+	
+	private class InputFormatter implements KeyListener{
+
+		@Override
+		public void keyTyped(KeyEvent e) {}
+
+		@Override
+		public void keyPressed(KeyEvent e) {}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			String number = convertFrom.getText();
+			number = number.toUpperCase();
+			convertFrom.setText(number);
+		}
+		
+	}
+	
 }
