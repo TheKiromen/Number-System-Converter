@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -120,7 +119,7 @@ public class Panel extends JPanel {
 	private class DataGetter implements ActionListener{
 
 		String number;
-		int base1=0,base2=0,prec=0;
+		int base1=0,base2=0;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -211,25 +210,12 @@ public class Panel extends JPanel {
 			break;
 			}
 			
-			//---PRECISION
-//			try {
-//				tmp=precision.getText();
-//				if(tmp.equals("")) {
-//					precision.setText("0");
-//					tmp="0";
-//				}
-//				prec=Integer.parseInt(tmp);
-//			}catch(NumberFormatException ex) {
-//				JOptionPane.showMessageDialog(null, "Invalid input. Precision should be an integer.", "Invalid Input.", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-			
-			
+		
 			
 			//------------------CONVERSION-----------------//
 			
 			try {
-				FormData data = new FormData(number,base1,base2,prec);
+				FormData data = new FormData(number,base1,base2);
 				convertTo.setText(Converter.convert(data));
 			}catch(NumberSystemException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(),"Invalid Input.", JOptionPane.ERROR_MESSAGE);
@@ -249,11 +235,14 @@ public class Panel extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			String number = convertFrom.getText();
-			number = number.toUpperCase();
-			convertFrom.setText(number);
+			int code = e.getKeyCode();
+			//This if allows to move in input box using arrow keys
+			if(code!=KeyEvent.VK_DOWN&&code!=KeyEvent.VK_UP&&code!=KeyEvent.VK_RIGHT&&code!=KeyEvent.VK_LEFT&&code!=KeyEvent.VK_SHIFT) {
+				String number = convertFrom.getText();
+				number = number.toUpperCase();
+				convertFrom.setText(number);
+			}
 		}
-		
 	}
 	
 }
