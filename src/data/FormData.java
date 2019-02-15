@@ -7,7 +7,7 @@ public class FormData {
 	public FormData(String number,int baseFrom,int baseTo) {
 		this.baseFrom=baseFrom;
 		this.baseTo=baseTo;
-		this.number=number;
+		this.number=number.toUpperCase();
 	}
 	
 	public int getBaseFrom() {
