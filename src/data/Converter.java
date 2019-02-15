@@ -26,11 +26,11 @@ public class Converter{
 	
 	
 	private static boolean verify(FormData data) {
-		String tmp=data.getNumber().toUpperCase();
+		String tmp=data.getNumber();
 		char c;
 		if(data.getBaseFrom()>10) {
 			//Characters acceptable 0-9 and A-Z
-			//Where A=11,B=12 and so on
+			//Where A=10,B=11 and so on
 			for(int i=0;i<tmp.length();i++) {
 				c=tmp.charAt(i);
 				if(!((c>='0'&&c<='9')||
@@ -53,7 +53,7 @@ public class Converter{
 	
 	
 	private static String toDecimal(String number,int base) {
-		String significand;//,floating_point;
+		String significand;
 		String result="";
 		
 		int sum=0;
@@ -76,7 +76,7 @@ public class Converter{
 	
 	
 	private static String fromDecimal(String number,int base) {
-		String significand;//,floating_point;
+		String significand;
 		String result="";
 
 		significand=number;
