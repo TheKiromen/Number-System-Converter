@@ -27,6 +27,7 @@ public class Panel extends JPanel {
 	JButton convert,help;
 	String[] systems = {"Binary","Octal","Decimal","Hexadecimal","Custom"};
 	DataGetter events = new DataGetter();
+	HelpFrame helpwindow = new HelpFrame();
 	
 	
 	//Data
@@ -72,6 +73,16 @@ public class Panel extends JPanel {
 		//Help button
 		c.gridy=4;
 		help=new JButton("Help");
+		help.addActionListener(new ActionListener() {
+			
+			@Override
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				helpwindow.setLocationRelativeTo(null);
+				helpwindow.show(true);
+			}
+			
+		});
 		add(help,c);
 
 		
